@@ -1,0 +1,201 @@
+public interface Payable {
+    double getPaymentAmount();
+}
+
+public interface Payable {
+    double getPaymentAmount();
+}
+
+// Person class represents a basic entity with common attributes
+public class Person implements Payable {
+    private static int idCounter = 0;
+    private final int id;
+    private String name;
+    private String surname;
+
+    // Default constructor increments id and assigns values
+    public Person() {
+        this.id = ++idCounter;
+    }
+
+    // Parametrized constructor increments id and assigns values
+    public Person(String name, String surname) {
+        this.id = ++idCounter;
+        this.name = name;
+        this.surname = surname;
+    }
+
+    // Getter for id
+    public int getId() {
+        return id;
+    }
+
+    // Getter for name
+    public String getName() {
+        return name;
+    }
+
+    // Setter for name
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // Getter for surname
+    public String getSurname() {
+        return surname;
+    }
+
+    // Setter for surname
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    // Default position for a Person is "Student"
+    public String getPosition() {
+        return "Student";
+    }
+
+    // Implementation of the Payable interface
+    @Override
+    public double getPaymentAmount() {
+        return 0;
+    }
+
+    // String representation of the Person
+    @Override
+    public String toString() {
+        return getPosition() + ": " + getId() + ". " + getName() + " " + getSurname();
+    }
+}
+
+// Employee class extends Person and adds attributes related to employment
+public class Employee extends Person {
+    private static int idCounter = 0;
+    private final int id;
+    private String position;
+    private double salary;
+
+    // Default constructor increments id and assigns values
+    public Employee() {
+        this.id = ++idCounter;
+    }
+
+    // Parametrized constructor increments id, assigns values, and calls super constructor
+    public Employee(String name, String surname, String position, double salary) {
+        super(name, surname);
+        this.id = ++idCounter;
+        this.position = position;
+        this.salary = salary;
+    }
+
+    // Getter for id
+    public int getId() {
+        return id;
+    }
+
+    // Getter for position
+    public String getPosition() {
+        return position;
+    }
+
+    // Setter for position
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    // Getter for salary
+    public double getSalary() {
+        return salary;
+    }
+
+    // Setter for salary
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+    // Implementation of the Payable interface
+    @Override
+    public double getPaymentAmount() {
+        return salary;
+    }
+
+    // String representation of the Employee
+    @Override
+    public String toString() {
+        return "Employee: " + getId() + ". " + getName() + " " + getSurname();
+    }
+}
+
+// Student class extends Person and adds attributes related to academic performance
+public class Student extends Person {
+    private static int idCounter = 0;
+    private final int id;
+    private double gpa;
+
+    // Default constructor increments id and assigns values
+    public Student() {
+        this.id = ++idCounter;
+    }
+
+    // Parametrized constructor increments id, assigns values, and calls super constructor
+    public Student(String name, String surname, double gpa) {
+        super(name, surname);
+        this.id = ++idCounter;
+        this.gpa = gpa;
+    }
+
+    // Getter for id
+    public int getId() {
+        return id;
+    }
+
+    // Getter for GPA
+    public double getGpa() {
+        return gpa;
+    }
+
+    // Setter for GPA
+    public void setGpa(double gpa) {
+        this.gpa = gpa;
+    }
+
+    // Implementation of the Payable interface
+    @Override
+    public double getPaymentAmount() {
+        // Stipend is given if GPA is greater than 2.67
+        return gpa > 2.67 ? 36660.00 : 0;
+    }
+
+    // String representation of the Student
+    @Override
+    public String toString() {
+        return "Student: " + getId() + ". " + getName() + " " + getSurname();
+    }
+}
+
+// Main class to demonstrate the usage of the classes and interfaces
+public class Main {
+    // Main method where the program starts execution
+    public static void main(String[] args) {
+        // Create an ArrayList of people
+        ArrayList<Person> people = new ArrayList<>();
+
+        // Add instances of Employee and Student to the ArrayList
+        people.add(new Employee("John", "Doe", "Manager", 100000.00));
+        people.add(new Employee("Jane", "Doe", "Engineer", 80000.00));
+        people.add(new Student("Alice", "Smith", 3.5));
+        people.add(new Student("Bob", "Johnson", 2.5));
+        people.add(new Student("Charlie", "Brown", 2.0));
+
+        // Call the printData method to display information about each person
+        printData(people);
+    }
+
+    // Method to iterate through people and print information about each person
+    public static void printData(Iterable<Person> people) {
+        for (Person person : people) {
+            System.out.println(person.toString() + " - Payment amount: " + person.getPaymentAmount());
+        }
+    }
+}
+
